@@ -395,10 +395,10 @@ enum OffchainCommands {
         #[arg(long, help = "SAS contract address (C...) the signature is bound to")]
         contract_id: String,
         #[arg(
-            long,
+            long = "out-file",
             help = "Write the signed attestation to this file instead of stdout"
         )]
-        output: Option<String>,
+        out_file: Option<String>,
     },
     /// Verify a signed off-chain attestation.
     ///
@@ -2096,7 +2096,7 @@ fn run_offchain(
             nonce,
             network_passphrase,
             contract_id,
-            output: output_file,
+            out_file,
         } => {
             let secret_key = resolve_secret_key(secret_key, identity.as_deref())?;
             let network_passphrase =
@@ -2114,7 +2114,7 @@ fn run_offchain(
             )?;
             let signed_json = serde_json::to_string_pretty(&signed)
                 .map_err(|e| format!("serialization failed: {e}"))?;
-            match output_file {
+            match out_file {
                 Some(path) => {
                     io_safety::write_atomic_private(&path, &signed_json, false)?;
                     emit_ok(
