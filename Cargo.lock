@@ -1330,6 +1330,7 @@ dependencies = [
  "hex",
  "schema-registry",
  "soroban-sas-common",
+ "soroban-sas-indexer",
  "soroban-sdk",
  "stellar-strkey",
 ]
